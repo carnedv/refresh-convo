@@ -1,28 +1,13 @@
-'use strict';
-
 /* Controllers */
 
-function IndexController($scope, $route) {
-	$scope.navSelected = 'home';
-
-	$scope.messages = [
-		{ id: 1, username: 'Foo', name: 'Angular.js', url: 'http://angularjs.org/', description: 'A client-side, MVC Javascript framework.', createdOn: new Date() },
-		{ id: 2, username: 'Bar', name: 'Socket.io', url: 'http://socket.io/', description: 'Real-time http transport mechanism written in Javascript.', createdOn: new Date() }
-	];
-
+function IndexController($scope, socket)
+{
+	$scope.messages = null;
 	$scope.users = [];
-
-	$scope.messages.forEach(function (msg)
-	{
-		if ($scope.users.indexOf(msg.username))
-		{
-			$scope.users.push(msg.username);
-		}
-	});
 
 	var newMessage = {
 		username: null,
-		name: null,
+		topic_name: null,
 		url: null,
 		description: null,
 		createdOn: null,
@@ -43,12 +28,36 @@ function IndexController($scope, $route) {
 
 		delete $scope.newMessage.newUsername;
 
+		socket.emit('add:topic', { newTopic: $scope.newMessage });
+
 		$scope.messages.unshift($scope.newMessage);
 		$scope.newMessage = angular.copy(newMessage);
 	};
+
+	socket.on('init', function (data)
+	{
+		$scope.messages = data;
+
+		var tmpUsers = {};
+
+		$scope.messages.forEach(function(msg)
+		{
+			tmpUsers[msg.username] = null;
+		});
+
+		$scope.users = Object.keys(tmpUsers);
+	});
+
+	socket.on('added:topic', function(msg)
+	{
+		$scope.messages.unshift(msg.topic);
+		$scope.newMessage = angular.copy(newMessage);
+	});
+
+	socket.emit('init');
 }
 
 
-function AboutController($scope, $route) {
-	$scope.navSelected = 'about';
+function AboutController($scope)
+{
 }
