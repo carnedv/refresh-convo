@@ -10,15 +10,19 @@
 		</ul>
 	</div>
 	<div class="span4">
-		<form name="add_new_message" ng-submit="saveNewMessage()">
+		<form name="addNewTopic" ng-submit="saveNewMessage()">
 			<fieldset>
 				<legend>Add a New Topic</legend>
 				<label>Member</label>
     			<select ng-model="newMessage.username" ng-options="value for value in users">
     			</select>
-    			<p>or</p>
-    			<label>Add user</label>
-    			<input type="text" placeholder="New username" ng-model="newMessage.newUsername">
+    			<div ng-switch on="newMessage.username">
+    				<div ng-switch-when="null">
+						<p>or</p>
+						<label>Add user</label>
+						<input type="text" placeholder="New username" ng-model="newMessage.newUsername" required>
+	    			</div>
+    			</div>
     			<label>Topic</label>
     			<input type="text" placeholder="Topic being discussed" required ng-model="newMessage.name">
     			<label>URL</label>
@@ -26,7 +30,7 @@
     			<label>More information</label>
     			<textarea ng-model="newMessage.description"></textarea>
     			<div>
-    				<button type="submit" class="btn">Submit</button>
+    				<button type="submit" class="btn" ng-disabled="addNewTopic.$invalid">Submit</button>
     			</div>
 			</fieldset>
 		</form>
