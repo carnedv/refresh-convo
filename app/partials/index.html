@@ -1,0 +1,34 @@
+<h3>Current Conversation</h3>
+<div class="row">
+	<div class="span6">
+		<ul class="conversation">
+			<li class="message" ng-repeat="msg in conversationMessages">
+				<h4>{{ msg.username }}</h4>
+				<p><a href="{{ msg.url }}">{{ msg.name }}</a></p>
+				<p>{{ msg.description }}</p>
+				<p class="published-on">{{ msg.createdOn }}</small>
+			</li>
+		</ul>
+	</div>
+	<div class="span3">
+		<form>
+			<fieldset>
+				<legend>Add a New Message</legend>
+				<label>Member</label>
+    			<select required>
+    				<option>...</option>
+    			</select>
+    			<label>Name</label>
+    			<input type="text" placeholder="Topic being discussed" required>
+    			<label>URL</label>
+    			<input type="text" placeholder="URL being discussed">
+    			<label>More information</label>
+    			<textarea></textarea>
+    			<button type="submit" class="btn">Submit</button>
+			</fieldset>
+		</form>
+	</div>
+	<div class="span3">
+		users active
+	</div>
+</div>
