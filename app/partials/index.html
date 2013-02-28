@@ -7,6 +7,7 @@
 				<p>{{ msg.description }}</p>
 				<p class="posted-by-on">Mentioned by {{ msg.username}} - <span ng-date-format>{{ msg.createdOn | date:'MM/dd/YYYY @ HH:mm:ss' }}</span></p>
 			</li>
+			<li ng-show="messages.length == 0">No topics in this conversation</li>
 		</ul>
 	</div>
 	<div class="span4">
