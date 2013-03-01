@@ -2,7 +2,7 @@
 
 function IndexController($scope, socket)
 {
-	$scope.messages = null;
+	$scope.messages = [];
 	$scope.users = [];
 
 	var newMessage = {
@@ -34,6 +34,44 @@ function IndexController($scope, socket)
 		$scope.newMessage = angular.copy(newMessage);
 	};
 
+	$scope.sortMesssages = function()
+	{
+		if ($scope.messages.length > 0)
+		{
+			$scope.messages.sort(function(a, b)
+			{
+				if (a.createdOn < b.createdOn)
+				{
+					return 1;
+				}
+			});
+		}
+	};
+
+	$scope.sortUsers = function()
+	{
+		if ($scope.users.length > 0)
+		{
+			$scope.messages.sort(function(a, b)
+			{
+				if (a > b)
+				{
+					return 1;
+				}
+			});
+		}
+	};
+
+	$scope.makeFavorite = function(msg)
+	{
+		if (msg.isFavorite == undefined)
+		{
+			msg.isFavorite = true;
+		} else {
+			msg.isFavorite = !msg.isFavorite;
+		}
+	};
+
 	socket.on('init', function (data)
 	{
 		$scope.messages = data;
@@ -54,9 +92,11 @@ function IndexController($scope, socket)
 		$scope.newMessage = angular.copy(newMessage);
 	});
 
+	$scope.$watch('messages', $scope.sortMesssages);
+	$scope.$watch('users', $scope.sortUsers);
+
 	socket.emit('init');
 }
-
 
 function AboutController($scope)
 {
