@@ -36,10 +36,13 @@ socketio.listen(server).on('connection', function (socket)
         {
             var data = [];
 
-            result.rows.forEach(function(row)
+            if (result !== undefined)
             {
-                data.push(row.value);
-            });
+                result.rows.forEach(function(row)
+                {
+                    data.push(row.value);
+                });
+            }
 
             socket.emit('init', data);
         });

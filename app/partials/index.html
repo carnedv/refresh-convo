@@ -1,12 +1,21 @@
-<h3>Current Conversation <span ng-show="messages">({{ messages.length }} topics)</span></h3>
+<h3>
+	Current Conversation 
+	<span ng-show="messages">
+		({{ messages.length }} <ng-pluralize count="messages.length" when="{'one': 'Topic', 'other': 'Topics' }"></ng-pluralize>)
+	</span>
+</h3>
 <div class="row">
 	<div class="span8">
 		<ul class="conversation">
 			<li class="message" ng-repeat="msg in messages">
-				<h4><a href="{{ msg.url }}">{{ msg.topic_name }}</a></h4>
+				<h4>
+					<a ng-class="{ 'make-fav-link': true, 'icon-star-empty': !msg.isFavorite, 'icon-star': msg.isFavorite }" ng-click="makeFavorite(msg)"></a>
+					<a href="{{ msg.url }}">{{ msg.topic_name }}</a>
+				</h4>
 				<p>{{ msg.description }}</p>
-				<p class="posted-by-on">Mentioned by {{ msg.username}} - <span ng-date-format>{{ msg.createdOn | date:'MM/dd/YYYY @ HH:mm:ss' }}</span></p>
+				<p class="posted-by-on">Mentioned by {{ msg.username}} - <span ng-date-format>{{ msg.createdOn | date:'MM/dd/yyyy @ HH:mm:ss' }}</span></p>
 			</li>
+			<li ng-show="messages.length == 0">No topics in this conversation</li>
 		</ul>
 	</div>
 	<div class="span4">
