@@ -25,3 +25,7 @@ To start the app
 
 * cd into the app/ folder and run ***node server***
 * visit ***http://localhost:8080/*** in your browser
+
+To Do
+
+* Make a wish list of additional functionality
