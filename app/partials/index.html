@@ -9,7 +9,6 @@
 		<ul class="conversation">
 			<li class="message" ng-repeat="msg in messages">
 				<h4>
-					<a ng-class="{ 'make-fav-link': true, 'icon-star-empty': !msg.isFavorite, 'icon-star': msg.isFavorite }" ng-click="makeFavorite(msg)"></a>
 					<a href="{{ msg.url }}">{{ msg.topic_name }}</a>
 				</h4>
 				<p>{{ msg.description }}</p>
