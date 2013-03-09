@@ -1,5 +1,29 @@
 /* Controllers */
 
+function AppController($scope, $routeParams, $window)
+{
+	$scope.isAdmin = false;
+	$scope.adminPin = 1001;
+
+	$scope.userPin = null;
+
+	$scope.doLogin = function()
+	{
+		if ($scope.userPin == $scope.adminPin)
+		{
+			$scope.isAdmin = true;
+		} else {
+			$scope.isAdmin = false;
+		}
+	};
+
+	$scope.doLogout = function()
+	{
+		$scope.userPin = null;
+		$scope.isAdmin = false;
+	};
+}
+
 function IndexController($scope, socket)
 {
 	$scope.messages = [];
@@ -64,7 +88,7 @@ function IndexController($scope, socket)
 
 	$scope.makeFavorite = function(msg)
 	{
-		if (msg.isFavorite == undefined)
+		if (msg.isFavorite === undefined)
 		{
 			msg.isFavorite = true;
 		} else {
@@ -94,6 +118,21 @@ function IndexController($scope, socket)
 
 	$scope.$watch('messages', $scope.sortMesssages);
 	$scope.$watch('users', $scope.sortUsers);
+
+	socket.emit('init');
+
+	$scope.$watch('userPin', function() { $scope.$parent.userPin = $scope.userPin; }, true);
+	$scope.$watch('$parent.userPin', function() { $scope.userPin = $scope.$parent.userPin; }, true);
+}
+
+function PublishLinksController($scope, socket)
+{
+	$scope.messages = [];
+
+	socket.on('init', function (data)
+	{
+		$scope.messages = data;
+	});
 
 	socket.emit('init');
 }

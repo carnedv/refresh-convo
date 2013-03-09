@@ -4,9 +4,17 @@
   <meta charset="utf-8">
   <title>RefreshBR Conversation Tracker</title>
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
-  <link href="//netdna.bootstrapcdn.com/bootswatch/2.3.0/cerulean/bootstrap.min.css" rel="stylesheet">
   <link href="//netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+  
   <style type="text/css">
+    body {
+      padding-top:40px;
+    }
+    @media (max-width: 979px) {
+      body {
+        padding-top: 0px;
+      }
+    }
     ul.conversation
     {
       list-style:none;
@@ -41,9 +49,13 @@
       font-size:10px;
       color:#999;
     }
+    .container {
+      padding
+    }
   </style>
+
 </head>
-<body>
+<body ng-controller="AppController">
   <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -56,12 +68,14 @@
             <div class="nav-collapse collapse">
               <ul class="nav">
                 <li><a href="#/">Home</a></li>
+                <li><a href="#/publish-links/">Publish Links</a></li>
                 <li><a href="#/about/">About</a></li>
               </ul>
             </div>
         </div>
       </div>
   </div>
+
   <div class="container">
     <div ng-view></div>
   </div>
