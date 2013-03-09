@@ -97,9 +97,15 @@
                 <li><a href="#/">Home</a></li>
                 <li><a href="#/about/">About</a></li>
                 <li ng-show="isAdmin"><a href="#/publish-links/">Publish Links</a></li>
-                <li ng-show="isAdmin"><a href="#/admin-settings/">Admin</a></li>
-                <li ng-show="isAdmin"><a href="javascript:;" ng-click="doLogout()">Logout</a></li>
               </ul>
+              <ul class="nav pull-right" ng-show="isAdmin">
+                <li><a href="#/admin-settings/">Admin</a></li>
+                <li><a href="javascript:;" ng-click="doLogout()">Logout</a></li>
+              </ul>
+              <form class="navbar-form pull-right" ng-show="!isAdmin" name="loginForm" ng-submit="doLogin()">
+                <input type="password" placeholder="Enter your pin #" required ng-model="userPin">
+                <button type="submit" class="btn" ng-disabled="loginForm.$invalid">Login</button>
+            </form>
             </div>
         </div>
       </div>
