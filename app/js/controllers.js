@@ -29,33 +29,36 @@ function IndexController($scope, socket)
 	$scope.messages = [];
 	$scope.users = [];
 
-	var newMessage = {
+	var messageModel = {
+		id: null,
+		newUsername: null,
 		username: null,
 		topic_name: null,
 		url: null,
 		description: null,
-		createdOn: null,
-		newUsername: null
+		createdOn: null
 	};
 
-	$scope.newMessage = angular.copy(newMessage);
+	$scope.formMode = 'add';
 
-	$scope.saveNewMessage = function()
+	$scope.formTopic = angular.copy(messageModel);
+
+	$scope.saveNewTopic = function()
 	{
-		$scope.newMessage.createdOn = new Date();
+		$scope.formTopic.createdOn = new Date();
 
-		if (!$scope.newMessage.username && $scope.newMessage.newUsername)
+		if (!$scope.formTopic.username && $scope.formTopic.newUsername)
 		{
-			$scope.newMessage.username = $scope.newMessage.newUsername;
-			$scope.users.push($scope.newMessage.username);
+			$scope.formTopic.username = $scope.formTopic.newUsername;
+			$scope.users.push($scope.formTopic.username);
 		}
 
-		delete $scope.newMessage.newUsername;
+		delete $scope.formTopic.newUsername;
 
-		socket.emit('add:topic', { newTopic: $scope.newMessage });
+		socket.emit('add:topic', { newTopic: $scope.formTopic });
 
-		$scope.messages.unshift($scope.newMessage);
-		$scope.newMessage = angular.copy(newMessage);
+		$scope.messages.unshift($scope.formTopic);
+		$scope.formTopic = angular.copy(messageModel);
 	};
 
 	$scope.sortMesssages = function()
@@ -96,6 +99,12 @@ function IndexController($scope, socket)
 		}
 	};
 
+	$scope.editTopic = function(topic)
+	{
+		$scope.formTopic = topic;
+		$scope.formTopic.id = topic._id;
+	};
+
 	socket.on('init', function (data)
 	{
 		$scope.messages = data;
@@ -113,7 +122,7 @@ function IndexController($scope, socket)
 	socket.on('added:topic', function(msg)
 	{
 		$scope.messages.unshift(msg.topic);
-		$scope.newMessage = angular.copy(newMessage);
+		$scope.formTopic = angular.copy(messageModel);
 	});
 
 	$scope.$watch('messages', $scope.sortMesssages);

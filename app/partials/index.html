@@ -17,33 +17,37 @@
 					Mentioned by {{ msg.username}} - 
 					<span>{{ msg.createdOn | date:'MM/dd/yyyy @ HH:mm:ss' }}</span>
 				</p>
-				<a class="edit-link" href="javscript:void(0);" ng-show="hover && isAdmin" ng-click="editPost()"><i class="icon-edit"></i></a>
+				<a class="edit-link" href="javscript:void(0);" ng-show="hover && isAdmin" ng-click="editTopic(msg)">
+					<i class="icon-edit"></i>
+				</a>
 			</li>
 			<li ng-show="messages.length == 0">No topics in this conversation</li>
 		</ul>
 	</div>
 	<div class="span3" ng-show="isAdmin">
-		<form name="addNewTopic" ng-submit="saveNewMessage()">
+		<form name="topicForm" ng-submit="saveNewTopic()">
 			<fieldset>
-				<legend>Add a New Topic</legend>
+				<input type="hidden" ng-model="formTopic.id" />
+				<legend ng-show="formTopic.id">Edit Topic</legend>
+				<legend ng-show="!formTopic.id">Add Topic</legend>
 				<label>Member</label>
-    			<select ng-model="newMessage.username" ng-options="value for value in users">
+    			<select ng-model="formTopic.username" ng-options="value for value in users">
     			</select>
-    			<div ng-switch on="newMessage.username">
+    			<div ng-switch on="formTopic.username">
     				<div ng-switch-when="null">
 						<p>or</p>
 						<label>Add user</label>
-						<input type="text" placeholder="New username" ng-model="newMessage.newUsername" required>
+						<input type="text" placeholder="New username" ng-model="formTopic.newUsername" required>
 	    			</div>
     			</div>
     			<label>Topic</label>
-    			<input type="text" placeholder="Topic being discussed" required ng-model="newMessage.topic_name">
+    			<input type="text" placeholder="Topic being discussed" required ng-model="formTopic.topic_name">
     			<label>URL</label>
-    			<input type="url" placeholder="URL being discussed" required ng-model="newMessage.url">
+    			<input type="url" placeholder="URL being discussed" required ng-model="formTopic.url">
     			<label>More information</label>
-    			<textarea ng-model="newMessage.description"></textarea>
+    			<textarea ng-model="formTopic.description"></textarea>
     			<div>
-    				<button type="submit" class="btn" ng-disabled="addNewTopic.$invalid">Submit</button>
+    				<button type="submit" class="btn" ng-disabled="topicForm.$invalid">Submit</button>
     			</div>
 			</fieldset>
 		</form>
