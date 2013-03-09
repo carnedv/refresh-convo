@@ -7,5 +7,6 @@ angular.module('convoTrack', ['convoTrack.filters', 'convoTrack.services', 'conv
     $routeProvider.when('/', {templateUrl: 'partials/index.html', controller: IndexController});
     $routeProvider.when('/publish-links', {templateUrl: 'partials/publish-links.html', controller: PublishLinksController});
     $routeProvider.when('/about', {templateUrl: 'partials/about.html', controller: AboutController});
+    $routeProvider.when('/admin-settings', {templateUrl: 'partials/admin-settings.html', controller: AdminSettingsController});
     $routeProvider.otherwise({redirectTo: '/'});
   }]);

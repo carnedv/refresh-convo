@@ -23,8 +23,9 @@
     }
     ul.conversation li.message
     {
-      padding:.4em;
+      padding:.4em .4em .4em 2em;
       border-bottom:1px solid #ddd;
+      position:relative;
     }
     ul.conversation li:first-child
     {
@@ -39,6 +40,12 @@
     {
       margin:.3em 0 0 0;
       padding:0;
+    }
+    ul.conversation li a.edit-link
+    {
+      position:absolute;
+      top:5px;
+      right:10px;
     }
     textarea[placeholder]
     {
@@ -68,8 +75,9 @@
             <div class="nav-collapse collapse">
               <ul class="nav">
                 <li><a href="#/">Home</a></li>
-                <li><a href="#/publish-links/">Publish Links</a></li>
                 <li><a href="#/about/">About</a></li>
+                <li ng-show="isAdmin"><a href="#/publish-links/">Publish Links</a></li>
+                <li ng-show="isAdmin"><a href="#/admin-settings/">Admin</a></li>
               </ul>
             </div>
         </div>

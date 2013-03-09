@@ -1,7 +1,13 @@
-<pre ng-repeat="msg in messages">
-	{{ msg.topic_name }}
-	{{ msg.url }}
-	{{ msg.description }}
-	Mentioned by {{ msg.username}}
-	-------------------------------
-</pre>
+<section ng-show="isAdmin">
+	<h3>Publish Links</h3>
+	<pre ng-repeat="msg in messages">
+		{{ msg.topic_name }}
+		{{ msg.url }}
+		{{ msg.description }}
+		Mentioned by {{ msg.username}}
+		-------------------------------
+	</pre>
+</section>
+<section ng-show="!isAdmin">
+	<p>Access Denied</p>
+</section>

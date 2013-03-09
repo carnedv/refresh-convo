@@ -140,3 +140,7 @@ function PublishLinksController($scope, socket)
 function AboutController($scope)
 {
 }
+
+function AdminSettingsController($scope)
+{
+}
