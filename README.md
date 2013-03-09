@@ -1,6 +1,6 @@
 # RefreshBR Convo Tracker
 
-This is a small test app built to showcase Angular.js and Socket.io. It was demoed at [RefreshBR](http://refreshbr.com)'s Show and Tell meeting on February 28th, 2013.
+This is a demo app to showcase Angular.js and Socket.io. It was demoed at [RefreshBR](http://refreshbr.com)'s Show and Tell meeting on February 28th, 2013.
 
 To run the app you need the following installed:
 
@@ -28,4 +28,7 @@ To start the app
 
 To Do
 
-* Make a wish list of additional functionality
+* Edit a topic
+* Set a session/meeting for a topic
+* List topics by meeting/session
+* Publish topics by meeting/session
