@@ -1,6 +1,6 @@
 /* Controllers */
 
-function AppController($scope, $routeParams, $window)
+function AppController($scope)
 {
 	$scope.isAdmin = false;
 	$scope.adminPin = 1001;
@@ -43,21 +43,35 @@ function IndexController($scope, socket)
 
 	$scope.formTopic = angular.copy(messageModel);
 
-	$scope.saveNewTopic = function()
+	$scope.saveTopic = function()
 	{
-		$scope.formTopic.createdOn = new Date();
-
-		if (!$scope.formTopic.username && $scope.formTopic.newUsername)
+		if (!$scope.formTopic.id) //create new topic
 		{
-			$scope.formTopic.username = $scope.formTopic.newUsername;
-			$scope.users.push($scope.formTopic.username);
+			$scope.formTopic.createdOn = new Date();
+
+			if (!$scope.formTopic.username && $scope.formTopic.newUsername)
+			{
+				$scope.formTopic.username = $scope.formTopic.newUsername;
+				$scope.users.push($scope.formTopic.username);
+			}
+
+			delete $scope.formTopic.newUsername;
+
+			socket.emit('add:topic', { newTopic: $scope.formTopic });
+
+			$scope.messages.unshift($scope.formTopic);
+		}
+		else //update topic
+		{
+			$scope.messages.forEach(function(topic, index)
+			{
+				if (topic._id == $scope.formTopic._id)
+				{
+					$scope.messages[index] = $scope.formTopic;
+				}
+			});
 		}
 
-		delete $scope.formTopic.newUsername;
-
-		socket.emit('add:topic', { newTopic: $scope.formTopic });
-
-		$scope.messages.unshift($scope.formTopic);
 		$scope.formTopic = angular.copy(messageModel);
 	};
 
@@ -101,8 +115,13 @@ function IndexController($scope, socket)
 
 	$scope.editTopic = function(topic)
 	{
-		$scope.formTopic = topic;
+		$scope.formTopic = angular.copy(topic);
 		$scope.formTopic.id = topic._id;
+	};
+
+	$scope.clearTopicForm = function()
+	{
+		$scope.formTopic = angular.copy(messageModel);
 	};
 
 	socket.on('init', function (data)

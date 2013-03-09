@@ -1,6 +1,6 @@
 
 <div class="row">
-	<div ng-class="{ span9: isAdmin, span10: !isAdmin }">
+	<div ng-class="{ span9: isAdmin, span10: !isAdmin, 'span-fixed-sidebar': true }">
 		<h3>
 			Current Conversation 
 			<span ng-show="messages">
@@ -20,59 +20,65 @@
 				<a class="edit-link" href="javscript:void(0);" ng-show="hover && isAdmin" ng-click="editTopic(msg)">
 					<i class="icon-edit"></i>
 				</a>
+				<a class="remove-link" href="javscript:void(0);" ng-show="hover && isAdmin" ng-click="deleteTopic(msg)">
+					<i class="icon-remove"></i>
+				</a>
 			</li>
 			<li ng-show="messages.length == 0">No topics in this conversation</li>
 		</ul>
 	</div>
 	<div class="span3" ng-show="isAdmin">
-		<form name="topicForm" ng-submit="saveNewTopic()">
-			<fieldset>
-				<input type="hidden" ng-model="formTopic.id" />
-				<legend ng-show="formTopic.id">Edit Topic</legend>
-				<legend ng-show="!formTopic.id">Add Topic</legend>
-				<label>Member</label>
-    			<select ng-model="formTopic.username" ng-options="value for value in users">
-    			</select>
-    			<div ng-switch on="formTopic.username">
-    				<div ng-switch-when="null">
-						<p>or</p>
-						<label>Add user</label>
-						<input type="text" placeholder="New username" ng-model="formTopic.newUsername" required>
-	    			</div>
-    			</div>
-    			<label>Topic</label>
-    			<input type="text" placeholder="Topic being discussed" required ng-model="formTopic.topic_name">
-    			<label>URL</label>
-    			<input type="url" placeholder="URL being discussed" required ng-model="formTopic.url">
-    			<label>More information</label>
-    			<textarea ng-model="formTopic.description"></textarea>
-    			<div>
-    				<button type="submit" class="btn" ng-disabled="topicForm.$invalid">Submit</button>
-    			</div>
-			</fieldset>
-		</form>
-		<p>
-			<a href="javascript:;" ng-click="doLogout()">Logout</a>
-		</p>
+		<div class="well sidebar-nav-fixed">
+			<form name="topicForm" ng-submit="saveTopic()">
+				<fieldset>
+					<input type="hidden" ng-model="formTopic.id" />
+					<legend ng-show="formTopic.id">Edit Topic</legend>
+					<legend ng-show="!formTopic.id">Add Topic</legend>
+					<label>Member</label>
+					<select ng-model="formTopic.username" ng-options="value for value in users">
+					</select>
+					<div ng-switch on="formTopic.username">
+						<div ng-switch-when="null">
+							<p>or</p>
+							<label>Add user</label>
+							<input type="text" placeholder="New username" ng-model="formTopic.newUsername" required>
+						</div>
+					</div>
+					<label>Topic</label>
+					<input type="text" placeholder="Topic being discussed" required ng-model="formTopic.topic_name">
+					<label>URL</label>
+					<input type="url" placeholder="URL being discussed" required ng-model="formTopic.url">
+					<label>More information</label>
+					<textarea ng-model="formTopic.description"></textarea>
+					<div>
+						<button type="submit" class="btn" ng-disabled="topicForm.$invalid" ng-show="!formTopic.id">Create</button>
+						<button type="submit" class="btn" ng-disabled="topicForm.$invalid" ng-show="formTopic.id">Update</button>
+						<button type="button" class="btn" ng-click="clearTopicForm()">Clear</button>
+					</div>
+				</fieldset>
+			</form>
+		</div>
 	</div>
 	<div class="span2" ng-show="!isAdmin">
-		<h3>View Session</h3>
-		<ul>
-			<li ng-repeat="session in sessions">
+		<div class="well sidebar-nav-fixed">
+			<h3>View Session</h3>
+			<ul>
+				<li ng-repeat="session in sessions">
 
-			</li>
-			<li ng-show="!sessions || sessions.length == 0">
-				No sessions available
-			</li>
-		</ul>
-		<h3>Login</h3>
-		<form name="loginForm" ng-submit="doLogin()">
-			<fieldset>
-    			<input type="password" placeholder="Enter your pin #" required ng-model="userPin">
-    			<div>
-    				<button type="submit" class="btn" ng-disabled="loginForm.$invalid">Login</button>
-    			</div>
-			</fieldset>
-		</form>
+				</li>
+				<li ng-show="!sessions || sessions.length == 0">
+					No sessions available
+				</li>
+			</ul>
+			<h3>Login</h3>
+			<form name="loginForm" ng-submit="doLogin()">
+				<fieldset>
+	    			<input type="password" placeholder="Enter your pin #" required ng-model="userPin">
+	    			<div>
+	    				<button type="submit" class="btn" ng-disabled="loginForm.$invalid">Login</button>
+	    			</div>
+				</fieldset>
+			</form>
+		</div>
 	</div>
 </div>

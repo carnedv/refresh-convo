@@ -45,6 +45,12 @@
     {
       position:absolute;
       top:5px;
+      right:30px;
+    }
+    ul.conversation li a.remove-link
+    {
+      position:absolute;
+      top:5px;
       right:10px;
     }
     textarea[placeholder]
@@ -56,9 +62,23 @@
       font-size:10px;
       color:#999;
     }
-    .container {
-      padding
-    }
+    .sidebar-nav-fixed {
+        position:fixed;
+        margin-top:10px;
+     }
+
+     @media (max-width: 767px) {
+         .sidebar-nav-fixed {
+             width:auto;
+         }
+     }
+
+     @media (max-width: 979px) {
+         .sidebar-nav-fixed {
+            position:static;
+            width: auto;
+         }
+     }
   </style>
 
 </head>
@@ -78,6 +98,7 @@
                 <li><a href="#/about/">About</a></li>
                 <li ng-show="isAdmin"><a href="#/publish-links/">Publish Links</a></li>
                 <li ng-show="isAdmin"><a href="#/admin-settings/">Admin</a></li>
+                <li ng-show="isAdmin"><a href="javascript:;" ng-click="doLogout()">Logout</a></li>
               </ul>
             </div>
         </div>
